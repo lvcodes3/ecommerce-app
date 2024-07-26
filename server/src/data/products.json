@@ -1,0 +1,62 @@
+[
+  {
+    "_id": {
+      "$oid": "66a4135d8031ea15b133cb26"
+    },
+    "productName": "Apple AirPods Pro 2nd Generation",
+    "price": 199.99,
+    "description": "AirPods Pro feature up to 2x more Active Noise Cancellation, Transparency mode, and now Adaptive Audio, which automatically tailors the noise control for you to provide the best listening experience across different environments and interactions throughout the day.",
+    "imageURL": "https://i5.walmartimages.com/seo/AirPods-Pro-2nd-generation-with-MagSafe-Case-USB-C_7e8598be-0a04-4938-98be-765f1fe80447.2f2187eed7001354fb4911fe454dc0d2.jpeg?odnHeight=2000&odnWidth=2000&odnBg=FFFFFF",
+    "stockQuantity": 250
+  },
+  {
+    "_id": {
+      "$oid": "66a4147564d97cd52ccfa284"
+    },
+    "productName": "Apple iPhone 15 Pro Max 256GB",
+    "price": 1249.00,
+    "description": "iPhone 15 Pro Max. Forged in titanium and featuring the groundbreaking A17 Pro chip, a customizable Action button, and the most powerful iPhone camera system ever.",
+    "imageURL": "https://i5.walmartimages.com/seo/AT-T-Apple-iPhone-15-Pro-Max-256GB-Natural-Titanium_43b58742-b6ad-491a-a795-e6c2eb6bcc6f.d6fa026332e1941b129f607c592844ab.jpeg?odnHeight=2000&odnWidth=2000&odnBg=FFFFFF",
+    "stockQuantity": 100
+  },
+  {
+    "_id": {
+      "$oid": "66a41504ec1c46af2d84e799"
+    },
+    "productName": "Sony Playstation 5 (PS5) Disc Console Slim",
+    "price": 494.65,
+    "description": "Play Has No Limits PlayStation®5 The PS5 console unleashes new gaming possibilities that you never anticipated. Experience lightning fast loading with an ultra-high speed SSD deeper immersion with support for haptic feedback, adaptive triggers, and 3D Audio*, and an all-new generation of incredible PlayStation® games. Lightning Speed Harness the power of a custom CPU, GPU, and SSD with Integrated I/O that rewrite the rules of what a PlayStation® console can do. Stunning Games Marvel at incredible graphics and experience new PS5 features.",
+    "imageURL": "https://i5.walmartimages.com/seo/Sony-PlayStation-5-PS5-Disc-Console-Slim_20785f28-4770-431e-a43f-626f79505c31.5804d76023f90d099f6d3ecd476948eb.jpeg?odnHeight=2000&odnWidth=2000&odnBg=FFFFFF",
+    "stockQuantity": 300
+  },
+  {
+    "_id": {
+      "$oid": "66a4158ff26b121f833d1138"
+    },
+    "productName": "Ray-Ban 55MM New Wayfarer Polarized Sunglasses",
+    "price": 218.00,
+    "description": "Ray-Ban RB2132 New Wayfarer sunglasses take the iconic shape of the Classic Wayfarer and infuse a slightly smaller frame and softer eye shape perfect for women and men. These unisex sunglasses are non-polarized. All Ray-Ban sunglasses are made from superior materials, and these unisex non-polarized sunglasses are no exception. RB2132 unisex Wayfarer square frames are manufactured from durable nylon, making them lightweight and able to hold up against frequent use. Our Wayfarer sunglasses utilize famous G-15 lenses, which are prescription ready and made from glass. Ray-Ban allows you to choose from a variety of frame colors and lens treatments including crystal green, brown or gradient styles. All Ray-Ban New Wayfarer Classic sunglasses are designed to offer an easy fit with a high level of visual clarity and protection. The sunglasses are available in a variety of size options to ensure a relaxed yet comfortable fit. Ray-Ban glass lenses help protect your eyes against harmful UV rays and have been coated with 100% UV protection. Ray-Ban glasses are comprised of precision-cut lenses that reduce eye strain when worn. Ray-Ban unisex sunglasses are comfortable and effective to wear on cloudy and hazy days, when the sun is bright, and during sunrise and sunset.",
+    "imageURL": "https://i5.walmartimages.com/seo/55MM-New-Wayfarer-Polarized-Sunglasses_ba99ea6e-4035-42b6-95c6-b956edd40f70_1.fd8581802adaa8496a2936b2e050e144.jpeg?odnHeight=2000&odnWidth=2000&odnBg=FFFFFF",
+    "stockQuantity": 1000
+  },
+  {
+    "_id": {
+      "$oid": "66a415c816e5add1a3bfea69"
+    },
+    "productName": "SAMSUNG 98” Class Q80C QLED 4K Smart TV QN98Q80CAFXZA",
+    "price": 4997.99,
+    "description": "Don’t settle for basic. Punch up the contrast with super-precise LEDs and elevate the ordinary to something more impressive. Direct Full Array and Dolby Atmos™ technology headline Samsung QLED’s refined audio/visual experience. Previously unnoticed details are refined–revealing ultra-deep blacks, pure whites and more than a billion colors–using Quantum HDR+ and precision-controlled Direct Full Array technology. Not to mention the instant transformation to vivid 4K resolution completed by the powerful Quantum Processor. To add to the experience, you’ll get intense audio that moves with the action thanks to Dolby Atmos™® and Object Tracking Sound, as well as smooth visuals with less lag or motion blur created by Motion Xcelerator Turbo+.",
+    "imageURL": "https://i5.walmartimages.com/seo/SAMSUNG-98-Class-Q80C-QLED-4K-Smart-TV-QN98Q80CAFXZA_ab363656-e98e-43d0-9273-ad927bd3c8b8.53440d1812ca087a8e52e0f99e09e1a2.jpeg?odnHeight=2000&odnWidth=2000&odnBg=FFFFFF",
+    "stockQuantity": 25
+  },
+  {
+    "_id": {
+      "$oid": "66a416321149e012efcd8fd9"
+    },
+    "productName": "NVIDIA GeForce RTX 4090 Founders Edition Graphics Card 24GB GDDR6X - Titanium and Black",
+    "price": 2750.00,
+    "description": "The NVIDIA GeForce RTX 4090 is the ultimate GeForce GPU. It brings an enormous leap in performance, efficiency, and AI-powered graphics. Experience ultra-high performance gaming, incredibly detailed virtual worlds with ray tracing, unprecedented productivity, and new ways to create. It's powered by the NVIDIA Ada Lovelace architecture and comes with 24 GB of G6X memory to deliver the ultimate experience for gamers and creators.",
+    "imageURL": "https://i5.walmartimages.com/seo/NVIDIA-GeForce-RTX-4090-Founders-Edition-Graphics-Card-24GB-GDDR6X-Titanium-and-Black_92f05b8c-94d6-4bcb-8db3-65cb2c70e20e.167a401cbdd5371048e1b8244a59359a.jpeg?odnHeight=2000&odnWidth=2000&odnBg=FFFFFF",
+    "stockQuantity": 150
+  }
+]

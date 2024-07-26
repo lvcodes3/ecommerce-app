@@ -3,7 +3,8 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 import { IUser, UserModel } from "../models/user";
-import { UserErrors } from "../errors";
+
+import { UserErrors } from "../enums/errors";
 
 const userRouter = Router();
 
@@ -60,30 +61,5 @@ userRouter.post("/login", async (req: Request, res: Response) => {
 
 // LOGOUT //
 userRouter.get("/logout", async (req: Request, res: Response) => {});
-
-// JWT MIDDLEWARE //
-export const verifyToken = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  const authHeader = req.headers.authorization;
-
-  // token exists //
-  if (authHeader) {
-    jwt.verify(authHeader, process.env.JWT_SECRET, (err) => {
-      // invalid //
-      if (err) {
-        return res.sendStatus(403);
-      }
-
-      // valid //
-      next();
-    });
-  }
-
-  // token does not exist //
-  return res.sendStatus(401);
-};
 
 export default userRouter;

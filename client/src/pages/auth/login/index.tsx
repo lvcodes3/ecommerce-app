@@ -1,11 +1,13 @@
 import { useState, SyntheticEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 
 import { UserErrors } from "../../errors";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -22,24 +24,32 @@ const LoginPage = () => {
     sanitizeInputs();
 
     try {
-      const response = await axios.post("http://localhost:5000/user/register", {
+      const response = await axios.post("http://localhost:5000/user/login", {
         username,
         password,
       });
 
+      // set jwt in client cookies //
       setCookies("access_token", response?.data?.token);
 
+      // set userId in client local storage //
       localStorage.setItem("userId", response?.data?.userId);
 
-      alert("Login Completed");
+      // redirect to main shop page //
+      navigate("/");
     } catch (err) {
-      if (err?.response?.data?.type === UserErrors.NO_USER_FOUND) {
-        alert("ERROR: No user found");
-      } else if (err?.response?.data?.type === UserErrors.WRONG_CREDENTIALS) {
-        alert("ERROR: Invalid credentials");
-      } else {
-        alert("ERROR");
+      let errMessage: string = "";
+      switch (err?.response?.data?.type) {
+        case UserErrors.NO_USER_FOUND:
+          errMessage = "ERROR: User doesn't exist";
+          break;
+        case UserErrors.WRONG_CREDENTIALS:
+          errMessage = "ERROR: Invalid credentials";
+          break;
+        default:
+          errMessage = "ERROR";
       }
+      alert(errMessage);
     }
   };
 

@@ -1,10 +1,12 @@
 import { useState, SyntheticEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { UserErrors } from "../../errors";
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
@@ -31,7 +33,8 @@ const RegisterPage = () => {
           password,
         });
 
-        alert("Registration Completed");
+        // redirect to login page //
+        navigate("/login");
       } catch (err) {
         if (err?.response?.data?.type === UserErrors.USERNAME_ALREADY_EXISTS) {
           alert("ERROR: Username already in use");

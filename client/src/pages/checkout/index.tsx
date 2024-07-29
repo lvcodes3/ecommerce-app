@@ -14,7 +14,7 @@ const CheckoutPage = () => {
 
   const { products } = useGetProducts();
 
-  const { getCartProductCount, getTotalCartAmount } =
+  const { getCartProductCount, getTotalCartAmount, checkout } =
     useContext<IShopContext>(ShopContext);
 
   const totalAmount: number = getTotalCartAmount();
@@ -42,7 +42,10 @@ const CheckoutPage = () => {
             >
               Continue Shopping
             </button>
-            <button className="px-2 py-1 font-medium border-[1px] border-black rounded-md bg-green-200 hover:bg-green-300">
+            <button
+              onClick={checkout}
+              className="px-2 py-1 font-medium border-[1px] border-black rounded-md bg-green-200 hover:bg-green-300"
+            >
               Checkout
             </button>
           </div>

@@ -1,18 +1,19 @@
 import { Router, Request, Response } from "express";
 
+import { authentication } from "../middlewares/auth";
+
 import { IProduct, ProductModel } from "../models/product";
 import { UserModel } from "../models/user";
-
-import { verifyToken } from "../middlewares/auth";
 
 import { ProductErrors, UserErrors } from "../enums/errors";
 
 const productRouter = Router();
 
 // GET ALL PRODUCTS //
-productRouter.get("/", verifyToken, async (_, res: Response) => {
+productRouter.get("/", authentication, async (_, res: Response) => {
   try {
     const products: IProduct[] = await ProductModel.find({});
+
     return res.json({ products });
   } catch (err) {
     return res.status(500).json({ type: err });
@@ -22,51 +23,53 @@ productRouter.get("/", verifyToken, async (_, res: Response) => {
 // CHECKOUT //
 productRouter.post(
   "/checkout",
-  verifyToken,
+  authentication,
   async (req: Request, res: Response) => {
     try {
-      const { userId, userProducts } = req.body;
+      const { cartProducts } = req.body;
 
       // get user from db //
-      const user = await UserModel.findById(userId);
+      const user = await UserModel.findById(req.userId);
 
       // get products from db //
-      const productIds = Object.keys(userProducts);
+      const productIds = Object.keys(cartProducts);
       const products = await ProductModel.find({ _id: { $in: productIds } });
 
-      // check if user exists //
+      // user DNE //
       if (!user) {
         return res.status(400).json({ type: UserErrors.NO_USER_FOUND });
       }
 
-      // check that all products exist //
+      // all products DNE //
       if (products.length !== productIds.length) {
-        return res.status(400).json({ type: ProductErrors.NO_PRODUCTS_FOUND });
+        return res
+          .status(400)
+          .json({ type: ProductErrors.NOT_ALL_PRODUCTS_FOUND });
       }
 
       // check product quantity & calculate total price //
       let totalPrice: number = 0;
-      for (const idKey in userProducts) {
+      for (const idKey in cartProducts) {
         const product = products.find(
           (product) => String(product._id) === idKey
         );
 
         if (!product) {
+          return res.status(400).json({ type: ProductErrors.NO_PRODUCT_FOUND });
+        }
+
+        if (product.stockQuantity < cartProducts[idKey]) {
           return res
             .status(400)
-            .json({ type: ProductErrors.NO_PRODUCTS_FOUND });
+            .json({ type: ProductErrors.INSUFFICIENT_STOCK });
         }
 
-        if (product.stockQuantity > userProducts[idKey]) {
-          return res.status(400).json({ type: ProductErrors.NOT_ENOUGH_STOCK });
-        }
-
-        totalPrice += product.price * userProducts[idKey];
+        totalPrice += product.price * cartProducts[idKey];
       }
 
-      // check user funds //
+      // user not enough funds //
       if (user.availableMoney < totalPrice) {
-        return res.status(400).json({ type: UserErrors.NOT_ENOUGH_FUNDS });
+        return res.status(400).json({ type: UserErrors.INSUFFICIENT_FUNDS });
       }
 
       // purchase //

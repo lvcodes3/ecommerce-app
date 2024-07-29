@@ -11,7 +11,7 @@ const LoginPage = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const [_, setCookies] = useCookies(["access_token"]);
+  const [_, setCookies] = useCookies(["jwt"]);
 
   const sanitizeInputs = () => {
     setUsername(username.trim());
@@ -30,10 +30,7 @@ const LoginPage = () => {
       });
 
       // set jwt in client cookies //
-      setCookies("access_token", response?.data?.token);
-
-      // set userId in client local storage //
-      localStorage.setItem("userId", response?.data?.userId);
+      setCookies("jwt", response?.data?.token);
 
       // redirect to main shop page //
       navigate("/");
@@ -43,7 +40,7 @@ const LoginPage = () => {
         case UserErrors.NO_USER_FOUND:
           errMessage = "ERROR: User doesn't exist";
           break;
-        case UserErrors.WRONG_CREDENTIALS:
+        case UserErrors.INVALID_CREDENTIALS:
           errMessage = "ERROR: Invalid credentials";
           break;
         default:

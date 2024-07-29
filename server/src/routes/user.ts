@@ -1,6 +1,8 @@
-import { Router, Request, Response, NextFunction } from "express";
+import { Router, Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+
+import { authentication } from "../middlewares/auth";
 
 import { IUser, UserModel } from "../models/user";
 
@@ -13,17 +15,18 @@ userRouter.post("/register", async (req: Request, res: Response) => {
   try {
     const { username, password } = req.body;
 
-    // check if username already exists //
     const user: IUser = await UserModel.findOne({ username });
+
+    // username already exists //
     if (user) {
       return res.status(400).json({ type: UserErrors.USERNAME_ALREADY_EXISTS });
     }
 
     // hash password //
     const saltRounds: number = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    const hashedPassword: string = await bcrypt.hash(password, saltRounds);
 
-    // create user //
+    // register //
     const newUser = new UserModel({ username, password: hashedPassword });
     await newUser.save();
 
@@ -38,28 +41,48 @@ userRouter.post("/login", async (req: Request, res: Response) => {
   try {
     const { username, password } = req.body;
 
-    // check if username already exists //
     const user: IUser = await UserModel.findOne({ username });
+
+    // user DNE //
     if (!user) {
       return res.status(400).json({ type: UserErrors.NO_USER_FOUND });
     }
 
-    // check password //
     const passwordMatch = await bcrypt.compare(password, user.password);
+
+    // invalid password //
     if (!passwordMatch) {
-      return res.status(400).json({ type: UserErrors.WRONG_CREDENTIALS });
+      return res.status(400).json({ type: UserErrors.INVALID_CREDENTIALS });
     }
 
     // create jsonwebtoken //
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
 
-    return res.json({ token, userId: user._id });
+    return res.json({ token });
+    // userId: user._id
   } catch (err) {
     return res.status(500).json({ type: err });
   }
 });
 
-// LOGOUT //
-userRouter.get("/logout", async (req: Request, res: Response) => {});
+// BALANCE //
+userRouter.get(
+  `/balance`,
+  authentication,
+  async (req: Request, res: Response) => {
+    try {
+      const user = await UserModel.findById(req.userId);
+
+      // user DNE //
+      if (!user) {
+        return res.status(400).json({ type: UserErrors.NO_USER_FOUND });
+      }
+
+      return res.json({ balance: user.availableMoney });
+    } catch (err) {
+      return res.status(500).json({ type: err });
+    }
+  }
+);
 
 export default userRouter;

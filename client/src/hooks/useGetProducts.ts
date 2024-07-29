@@ -1,30 +1,28 @@
-// hook: get all products from backend //
-
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import { useGetToken } from "./useGetToken";
-
 import { IProduct } from "../models/interfaces";
 
+import { useGetJWT } from "./useGetJWT";
+
 export const useGetProducts = () => {
+  const { headers } = useGetJWT();
+
   const [products, setProducts] = useState<IProduct[]>([]);
 
-  const { headers } = useGetToken();
-
-  const fetchProducts = async () => {
+  const getProducts = async () => {
     try {
-      const fetchedProducts = await axios.get("http://localhost:5000/product", {
+      const dbProducts = await axios.get("http://localhost:5000/products", {
         headers,
       });
-      setProducts(fetchedProducts.data.products);
+      setProducts(dbProducts.data.products);
     } catch (err) {
       alert("ERROR");
     }
   };
 
   useEffect(() => {
-    fetchProducts();
+    getProducts();
   }, []);
 
   return { products };

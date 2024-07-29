@@ -24,7 +24,7 @@ app.use(cors());
 
 // routes //
 app.use("/user", userRouter);
-app.use("/product", productRouter);
+app.use("/products", productRouter);
 
 // main //
 app.listen(PORT, () => {

@@ -1,26 +1,52 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
-export const verifyToken = (
+import { UserModel } from "../models/user";
+
+import { UserErrors } from "../enums/errors";
+
+// extending express request to hold optional userId //
+declare module "express-serve-static-core" {
+  interface Request {
+    userId?: string;
+  }
+}
+
+// authenticate jsonwebtoken //
+export const authentication = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const authHeader = req.headers.authorization;
+  // get jwt value => passed in the headers from the client's cookies //
+  const jwtValue = req.headers.authorization;
 
-  // token exists //
-  if (authHeader) {
-    jwt.verify(authHeader, process.env.JWT_SECRET, (err) => {
-      // invalid //
-      if (err) {
-        return res.sendStatus(403);
+  // jwt exists //
+  if (jwtValue) {
+    try {
+      // authenticate jwt //
+      const decodedJWT = jwt.verify(jwtValue, process.env.JWT_SECRET) as {
+        userId: string;
+      };
+
+      const user = await UserModel.findById(decodedJWT.userId);
+
+      if (!user) {
+        return res.status(400).json({ type: UserErrors.NO_USER_FOUND });
       }
 
-      // valid //
+      // set userId in req //
+      req.userId = user._id;
+
+      // go to next route //
       next();
-    });
-  } else {
-    // token does not exist //
+    } catch (err) {
+      // invalid jwt //
+      return res.sendStatus(403);
+    }
+  }
+  // jwt DNE //
+  else {
     return res.sendStatus(401);
   }
 };

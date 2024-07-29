@@ -1,11 +1,13 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
 
 import { IShopContext, ShopContext } from "../context/shop-context";
 
 export const Navbar = () => {
-  const { getAllCartProductCount } = useContext<IShopContext>(ShopContext);
+  const { userMoney, getAllCartProductCount } =
+    useContext<IShopContext>(ShopContext);
+
   const total = getAllCartProductCount();
 
   return (
@@ -27,6 +29,7 @@ export const Navbar = () => {
             {total > 0 && <span>{total}</span>}
           </Link>
         </li>
+        <li>${userMoney.toFixed(2)}</li>
       </ul>
     </nav>
   );

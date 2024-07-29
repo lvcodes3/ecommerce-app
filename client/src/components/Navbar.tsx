@@ -1,8 +1,13 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
-
 import { FaShoppingCart } from "react-icons/fa";
 
+import { IShopContext, ShopContext } from "../context/shop-context";
+
 export const Navbar = () => {
+  const { getAllCartProductCount } = useContext<IShopContext>(ShopContext);
+  const total = getAllCartProductCount();
+
   return (
     <nav className="w-screen h-20 px-10 flex justify-between items-center text-white bg-blue-950">
       <h1 className="text-3xl font-semibold">
@@ -17,8 +22,9 @@ export const Navbar = () => {
           <Link to="/purchased-items">Purchases</Link>
         </li>
         <li>
-          <Link to="/checkout">
+          <Link to="/checkout" className="flex items-center gap-2">
             <FaShoppingCart className="w-6 h-6" />
+            {total > 0 && <span>{total}</span>}
           </Link>
         </li>
       </ul>

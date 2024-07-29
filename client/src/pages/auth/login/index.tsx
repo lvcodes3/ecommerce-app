@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 
-import { UserErrors } from "../../errors";
+import { UserErrors } from "../../../models/errors";
 
 const LoginPage = () => {
   const navigate = useNavigate();

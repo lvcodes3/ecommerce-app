@@ -19,8 +19,8 @@ export const verifyToken = (
       // valid //
       next();
     });
+  } else {
+    // token does not exist //
+    return res.sendStatus(401);
   }
-
-  // token does not exist //
-  return res.sendStatus(401);
 };

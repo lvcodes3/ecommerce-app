@@ -2,7 +2,7 @@ import { useState, SyntheticEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import { UserErrors } from "../../errors";
+import { UserErrors } from "../../../models/errors";
 
 const RegisterPage = () => {
   const navigate = useNavigate();

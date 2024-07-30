@@ -9,6 +9,7 @@ import { useGetProducts } from "../hooks/useGetProducts";
 
 export interface IShopContext {
   userMoney: number;
+  purchasedProducts: IProduct[];
   getCartProductCount: (productId: string) => number;
   getAllCartProductCount: () => number;
   getTotalCartAmount: () => number;
@@ -20,6 +21,7 @@ export interface IShopContext {
 
 const defaultValues: IShopContext = {
   userMoney: 0,
+  purchasedProducts: [],
   getCartProductCount: () => 0,
   getAllCartProductCount: () => 0,
   getTotalCartAmount: () => 0,
@@ -42,9 +44,23 @@ export const ShopContextProvider = (props) => {
 
   const [userMoney, setUserMoney] = useState<number>(0);
 
+  const [purchasedProducts, setPurchasedProducts] = useState<IProduct[]>([]);
+
+  const getPurchasedProducts = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:5000/products/purchased-products",
+        {
+          headers,
+        }
+      );
+      setPurchasedProducts(response.data.purchasedProducts);
+    } catch (err) {}
+  };
+
   const getUserMoney = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/user/balance`, {
+      const response = await axios.get("http://localhost:5000/user/balance", {
         headers,
       });
       setUserMoney(response.data.balance);
@@ -159,10 +175,12 @@ export const ShopContextProvider = (props) => {
 
   useEffect(() => {
     getUserMoney();
+    getPurchasedProducts();
   }, []);
 
   const contextValue: IShopContext = {
     userMoney,
+    purchasedProducts,
     getCartProductCount,
     getAllCartProductCount,
     getTotalCartAmount,

@@ -65,9 +65,14 @@ userRouter.post("/login", async (req: Request, res: Response) => {
   }
 });
 
+// AUTH //
+userRouter.get("/auth", authentication, async (req: Request, res: Response) => {
+  return res.json({ userId: req.userId });
+});
+
 // BALANCE //
 userRouter.get(
-  `/balance`,
+  "/balance",
   authentication,
   async (req: Request, res: Response) => {
     try {

@@ -3,7 +3,7 @@ import { Router, Request, Response } from "express";
 import { authentication } from "../middlewares/auth";
 
 import { IProduct, ProductModel } from "../models/product";
-import { UserModel } from "../models/user";
+import { IUser, UserModel } from "../models/user";
 
 import { ProductErrors, UserErrors } from "../enums/errors";
 
@@ -19,6 +19,29 @@ productRouter.get("/", authentication, async (_, res: Response) => {
     return res.status(500).json({ type: err });
   }
 });
+
+// GET ALL PURCHASED PRODUCTS BY USER //
+productRouter.get(
+  "/purchased-products",
+  authentication,
+  async (req: Request, res: Response) => {
+    try {
+      const user: IUser = await UserModel.findById(req.userId);
+
+      if (!user) {
+        return res.status(400).json({ type: UserErrors.NO_USER_FOUND });
+      }
+
+      const purchasedProducts = await ProductModel.find({
+        _id: { $in: user.purchasedItems },
+      });
+
+      return res.json({ purchasedProducts });
+    } catch (err) {
+      return res.status(500).json({ type: err });
+    }
+  }
+);
 
 // CHECKOUT //
 productRouter.post(

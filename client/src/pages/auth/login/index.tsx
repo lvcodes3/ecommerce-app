@@ -5,7 +5,11 @@ import { useCookies } from "react-cookie";
 
 import { UserErrors } from "../../../models/errors";
 
-const LoginPage = () => {
+interface LoginPageProps {
+  setAuthenticated: (auth: boolean) => void;
+}
+
+const LoginPage = (props: LoginPageProps) => {
   const navigate = useNavigate();
 
   const [username, setUsername] = useState<string>("");
@@ -28,6 +32,9 @@ const LoginPage = () => {
         username,
         password,
       });
+
+      // auth //
+      props.setAuthenticated(true);
 
       // set jwt in client cookies //
       setCookies("jwt", response?.data?.token);
